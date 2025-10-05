@@ -6,7 +6,7 @@ export default function Header() {
     <header className="app-header">
       <img src="/icons/logo.svg" alt="logo" />
       <div className="brand">
-        <div className="brand-title">SubHub</div>
+        <div className="brand-title">DigitalShop</div>
         <div className="brand-sub">цифровые подписки</div>
       </div>
     </header>
