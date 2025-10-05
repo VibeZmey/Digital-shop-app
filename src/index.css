@@ -4,7 +4,7 @@
   box-sizing: border-box;
 }
 html {
-  font-size: 50px; /* 1rem = 16px */
+  font-size: 50px;
 }
 
 img{
@@ -46,3 +46,4 @@ li{
   align-items: center;
   gap: 1rem;
 }
+

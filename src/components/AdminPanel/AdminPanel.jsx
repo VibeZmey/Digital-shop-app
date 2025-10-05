@@ -26,12 +26,12 @@ export default function AdminPanel({ data, addCategory, addProduct, removeCatego
         </div>
         <div className="row">
           <label>Иконка (URL)</label>
-          <input placeholder="/icons/netflix.svg" value={catIcon} onChange={(e) => setCatIcon(e.target.value)} />
+          <input placeholder="/icons/netflix.png" value={catIcon} onChange={(e) => setCatIcon(e.target.value)} />
         </div>
         <button
           className="btn primary"
           onClick={() => {
-            addCategory({ name: catName.trim(), icon: catIcon.trim() || "/icons/placeholder.svg" });
+            addCategory({ name: catName.trim(), icon: catIcon.trim() || "/icons/placeholder.png" });
             setCatName(""); setCatIcon("");
           }}
           disabled={!canAddCat}
@@ -61,7 +61,7 @@ export default function AdminPanel({ data, addCategory, addProduct, removeCatego
         </div>
         <div className="row">
           <label>Изображение (URL)</label>
-          <input placeholder="/icons/subscription.svg" value={prodImage} onChange={(e) => setProdImage(e.target.value)} />
+          <input placeholder="/icons/subscription.png" value={prodImage} onChange={(e) => setProdImage(e.target.value)} />
         </div>
         <div className="row row--inline">
           <label>Нужен логин/пароль?</label>
@@ -70,7 +70,7 @@ export default function AdminPanel({ data, addCategory, addProduct, removeCatego
         <button
           className="btn primary"
           onClick={() => {
-            addProduct(targetCat, { name: prodName.trim(), price: prodPrice.trim(), image: prodImage.trim() || "/icons/placeholder.svg", requiresLogin });
+            addProduct(targetCat, { name: prodName.trim(), price: prodPrice.trim(), image: prodImage.trim() || "/icons/placeholder.png", requiresLogin });
             setProdName(""); setProdPrice(""); setProdImage("");
           }}
           disabled={!canAddProd}

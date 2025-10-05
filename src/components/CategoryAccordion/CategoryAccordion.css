@@ -12,7 +12,19 @@
   appearance: none; border: none; cursor: pointer;
 }
 .category__left { display: flex; align-items: center; gap: 10px; }
-.category__icon { width: 28px; height: 28px; border-radius: 6px; object-fit: cover; background: #fff; border: 1px solid rgba(0,0,0,0.06); }
+
+/* ВАЖНО: иконка категории — квадрат 40x40, PNG вписывается без искажений */
+.category__icon {
+  width: 40px;
+  height: 40px;
+  aspect-ratio: 1 / 1;
+  object-fit: contain;     /* чтобы разные PNG становились в рамку красиво */
+  background: #fff;
+  border: 1px solid rgba(0,0,0,0.06);
+  border-radius: 8px;
+  display: block;
+}
+
 .category__title { font-weight: 800; }
 .category__chevron { opacity: 0.6; }
 .category__content { padding: 8px; }

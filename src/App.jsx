@@ -1,5 +1,4 @@
-import React, { useCallback, useEffect, useMemo, useState } from "react";
-import { useTelegram } from "./telegram/useTelegram";
+import React, { useCallback, useEffect, useState } from "react";
 import Header from "./components/Header/Header.jsx";
 import Tabs from "./components/Tabs/Tabs.jsx";
 import CategoryAccordion from "./components/CategoryAccordion/CategoryAccordion.jsx";
@@ -7,9 +6,10 @@ import ProductCard from "./components/ProductCard/ProductCard.jsx";
 import Dialog from "./components/Dialog/Dialog.jsx";
 import AdminPanel from "./components/AdminPanel/AdminPanel.jsx";
 import { useLocalStorage } from "./hooks/useLocalStorage";
+import { useTelegram } from "./telegram/useTelegram";
 import "./styles/app.css";
 
-const LS_KEY = "tg-shop-data-v1";
+const LS_KEY = "tg-shop-data-v2"; // ВАЖНО: поменяли ключ, чтобы не брать старые .svg из localStorage
 
 export default function App() {
   const { tg, MainButton } = useTelegram();
@@ -19,34 +19,34 @@ export default function App() {
       {
         id: crypto.randomUUID(),
         name: "Steam",
-        icon: "/icons/steam.svg",
+        icon: "/icons/steam.png",
         products: [
-          { id: crypto.randomUUID(), name: "Пополнение баланса", price: "", image: "/icons/replenish.svg", requiresLogin: true },
-          { id: crypto.randomUUID(), name: "Gift Card", price: "", image: "/icons/gift-card.svg", requiresLogin: false }
+          { id: crypto.randomUUID(), name: "Пополнение баланса", price: "", image: "/icons/replenish.png", requiresLogin: true },
+          { id: crypto.randomUUID(), name: "Gift Card", price: "", image: "/icons/gift-card.png", requiresLogin: false }
         ]
       },
       {
         id: crypto.randomUUID(),
         name: "Netflix",
-        icon: "/icons/netflix.svg",
+        icon: "/icons/netflix.png",
         products: [
-          { id: crypto.randomUUID(), name: "Basic", price: "670", image: "/icons/subscription.svg", requiresLogin: true },
-          { id: crypto.randomUUID(), name: "Standard", price: "960", image: "/icons/subscription.svg", requiresLogin: true },
-          { id: crypto.randomUUID(), name: "Premium", price: "1150", image: "/icons/subscription.svg", requiresLogin: true }
+          { id: crypto.randomUUID(), name: "Basic", price: "670", image: "/icons/subscription.png", requiresLogin: true },
+          { id: crypto.randomUUID(), name: "Standard", price: "960", image: "/icons/subscription.png", requiresLogin: true },
+          { id: crypto.randomUUID(), name: "Premium", price: "1150", image: "/icons/subscription.png", requiresLogin: true }
         ]
       },
       {
         id: crypto.randomUUID(),
         name: "Spotify",
-        icon: "/icons/spotify.svg",
+        icon: "/icons/spotify.png",
         products: [
-          { id: crypto.randomUUID(), name: "Premium", price: "399", image: "/icons/subscription.svg", requiresLogin: true }
+          { id: crypto.randomUUID(), name: "Premium", price: "399", image: "/icons/subscription.png", requiresLogin: true }
         ]
       }
     ]
   }));
 
-  const [tab, setTab] = useState("shop"); // shop | admin
+  const [tab, setTab] = useState("shop");
   const [checkoutOpen, setCheckoutOpen] = useState(false);
   const [selection, setSelection] = useState({ category: null, product: null });
 
@@ -54,9 +54,7 @@ export default function App() {
     setSelection({ category, product });
     setCheckoutOpen(true);
   }, []);
-  const closeCheckout = useCallback(() => {
-    setCheckoutOpen(false);
-  }, []);
+  const closeCheckout = useCallback(() => setCheckoutOpen(false), []);
 
   // Admin ops
   const addCategory = (cat) => {
@@ -95,7 +93,6 @@ export default function App() {
   // MainButton — показать в момент оформления
   useEffect(() => {
     if (!MainButton) return;
-
     const handleMainClick = () => {
       const payload = {
         type: "checkout",
@@ -129,7 +126,6 @@ export default function App() {
   return (
     <div className="app">
       <Header />
-
       <Tabs value={tab} onChange={setTab} />
 
       {tab === "shop" && (
@@ -137,9 +133,7 @@ export default function App() {
           {categories.map((cat) => (
             <CategoryAccordion key={cat.id} title={cat.name} icon={cat.icon}>
               <div className="product-grid">
-                {cat.products.length === 0 && (
-                  <div className="empty">Нет товаров</div>
-                )}
+                {cat.products.length === 0 && <div className="empty">Нет товаров</div>}
                 {cat.products.map((p) => (
                   <ProductCard
                     key={p.id}
@@ -149,9 +143,6 @@ export default function App() {
                     onClick={() => openCheckout(cat, p)}
                   />
                 ))}
-              </div>
-              <div className="category-actions">
-                {/* Админ-кнопки можно показать условно по роли/флагу */}
               </div>
             </CategoryAccordion>
           ))}

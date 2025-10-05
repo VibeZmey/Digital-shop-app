@@ -1,0 +1,27 @@
+.product-card {
+  display: flex; align-items: center; justify-content: space-between;
+  gap: 12px; padding: 12px;
+  border-radius: 12px; background: #fff; color: #111;
+  border: 1px solid rgba(0,0,0,0.06);
+  cursor: pointer;
+  transition: transform .08s ease, box-shadow .12s ease;
+}
+.product-card:hover { transform: translateY(-1px); box-shadow: var(--shadow-1); }
+.product-card__left { display: flex; align-items: center; gap: 12px; }
+
+/* ВАЖНО: изображение PNG любого размера вписывается в квадрат 64x64 без искажений */
+.product-card__image {
+  width: 64px;
+  height: 64px;
+  aspect-ratio: 1 / 1;
+  object-fit: contain;     /* сохраняем пропорции, не обрезаем */
+  background: #f7f7f7;
+  border: 1px solid rgba(0,0,0,0.06);
+  border-radius: 10px;
+  display: block;
+}
+
+.product-card__meta { display: flex; flex-direction: column; gap: 4px; }
+.product-card__name { font-weight: 800; font-size: 14px; }
+.product-card__price { font-weight: 800; color: var(--app-link); }
+.product-card__cta { font-weight: 700; color: var(--app-link); }
