@@ -1,0 +1,29 @@
+:root {
+  --app-bg: var(--tg-theme-bg-color, #ffffff);
+  --app-text: var(--tg-theme-text-color, #0f0f0f);
+  --app-hint: var(--tg-theme-hint-color, #8e8e93);
+  --app-link: var(--tg-theme-link-color, #2481cc);
+  --app-button: var(--tg-theme-button-color, #2481cc);
+  --app-button-text: var(--tg-theme-button-text-color, #ffffff);
+  --app-secondary-bg: var(--tg-theme-secondary-bg-color, #f2f2f2);
+
+  --radius: 14px;
+  --shadow-1: 0 8px 24px rgba(0, 0, 0, 0.12);
+}
+
+* { box-sizing: border-box; }
+html, body, #root { height: 100%; }
+body {
+  margin: 0;
+  background: var(--app-bg);
+  color: var(--app-text);
+  font-family: system-ui, -apple-system, Segoe UI, Roboto, Ubuntu, Cantarell, "Helvetica Neue", Arial, "Apple Color Emoji", "Segoe UI Emoji";
+}
+
+.app {
+  max-width: 760px;
+  margin: 0 auto;
+  padding: 12px;
+}
+
+h1, h2, h3 { margin: 0; }

@@ -1,0 +1,7 @@
+.admin {
+  display: grid; gap: 12px;
+}
+.admin-list { display: grid; gap: 12px; }
+.admin-products { display: grid; gap: 8px; padding: 8px; }
+.admin-cat-actions { padding: 8px; }
+.admin-product-row { display: grid; grid-template-columns: 1fr auto; gap: 8px; align-items: center; }

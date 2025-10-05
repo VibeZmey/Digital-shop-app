@@ -1,0 +1,18 @@
+.category {
+  border-radius: var(--radius);
+  background: var(--app-secondary-bg);
+  box-shadow: var(--shadow-1);
+  overflow: hidden;
+}
+.category__header {
+  width: 100%;
+  display: flex; align-items: center; justify-content: space-between;
+  gap: 8px; padding: 12px;
+  background: transparent; color: var(--app-text);
+  appearance: none; border: none; cursor: pointer;
+}
+.category__left { display: flex; align-items: center; gap: 10px; }
+.category__icon { width: 28px; height: 28px; border-radius: 6px; object-fit: cover; background: #fff; border: 1px solid rgba(0,0,0,0.06); }
+.category__title { font-weight: 800; }
+.category__chevron { opacity: 0.6; }
+.category__content { padding: 8px; }
