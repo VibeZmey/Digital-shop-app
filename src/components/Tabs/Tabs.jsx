@@ -19,14 +19,13 @@ export default function Tabs({ value, onChange }) {
       >
         Магазин
       </button>
-      (ADMIN_IDS.contains(userId) &&
+      {ADMIN_IDS.contains(userId) &&
       <button
           className={value === "admin" ? "tab active" : "tab"}
           onClick={() => onChange("admin")}
         >
           Админ
-      </button>)
-
+      </button>}
     </div>
   );
 }
