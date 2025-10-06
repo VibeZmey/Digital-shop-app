@@ -20,12 +20,12 @@ export default function Tabs({ value, onChange }) {
         Магазин
       </button>
       {ADMIN_IDS.include(userId) &&
-      <button
+        (<button
           className={value === "admin" ? "tab active" : "tab"}
           onClick={() => onChange("admin")}
         >
           Админ
-      </button>}
+      </button>)}
     </div>
   );
 }
