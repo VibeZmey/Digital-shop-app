@@ -1,15 +1,28 @@
-//import { useEffect, useState } from 'react';
-import React from "react";
+import React, { useEffect, useMemo, useState } from "react";
 import "./Tabs.css";
 
-export default function Tabs({ value, onChange }) {
-  //const ADMIN_IDS = process.env.ADMIN_IDS.split(',').map(id => parseInt(id, 10));
-  //const [userId, setUserId] = useState(null);
+function getAdminIds() {
 
-  // useEffect(() => {
-  //   const tg = window.Telegram?.WebApp;
-  //   setUserId(tg?.initDataUnsafe?.user?.id ?? null);
-  // }, []);
+  const raw =
+    (typeof process !== "undefined" && process.env && process.env.ADMIN_IDS) ||
+    "";
+
+  return raw
+    .split(",")
+    .map(s => parseInt(s.trim(), 10))
+    .filter(n => Number.isFinite(n));
+}
+
+export default function Tabs({ value, onChange }) {
+  const ADMIN_IDS = useMemo(getAdminIds, []);
+  const [userId, setUserId] = useState(null);
+
+  useEffect(() => {
+    const tg = window.Telegram?.WebApp;
+    setUserId(tg?.initDataUnsafe?.user?.id ?? null);
+  }, []);
+
+  const isAdmin = userId != null && ADMIN_IDS.includes(userId);
 
   return (
     <div className="tabs">
@@ -20,12 +33,14 @@ export default function Tabs({ value, onChange }) {
         Магазин
       </button>
 
-      <button
-        className={value === "admin" ? "tab active" : "tab"}
-        onClick={() => onChange("admin")}
-      >
-        Админ
-      </button>
+      {isAdmin && (
+        <button
+          className={value === "admin" ? "tab active" : "tab"}
+          onClick={() => onChange("admin")}
+        >
+          Админ
+        </button>
+      )}
     </div>
   );
 }
