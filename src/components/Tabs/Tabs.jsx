@@ -19,6 +19,7 @@ export default function Tabs({ value, onChange }) {
 
   useEffect(() => {
     const tg = window.Telegram?.WebApp;
+    console.log(tg?.initDataUnsafe?.user);
     setUserId(tg?.initDataUnsafe?.user?.id ?? null);
   }, []);
 
