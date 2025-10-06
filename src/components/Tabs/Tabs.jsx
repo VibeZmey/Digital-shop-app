@@ -33,6 +33,7 @@ export default function Tabs({ value, onChange }) {
   // Для отладки — проверьте, что здесь не пусто
   useEffect(() => {
     console.log("ADMIN_IDS:", ADMIN_IDS, "userId:", userId, "types:", typeof ADMIN_IDS[0], typeof userId);
+    console.log(`.ENV ${process.env.REACT_APP_ADMIN_IDS}`);
   }, [ADMIN_IDS, userId]);
 
   const isAdmin = userId != null && ADMIN_IDS.includes(Number(userId));
