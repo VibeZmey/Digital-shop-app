@@ -4,17 +4,13 @@ import "./Tabs.css";
 export default function Tabs({ value, onChange }) {
   const [userId, setUserId] = useState(null);
   const ADMIN_IDS = process.env.REACT_APP_ADMIN_IDS.split(',').map(id => parseInt(id, 10));
+
   useEffect(() => {
     const tg = window.Telegram?.WebApp;
     setUserId(tg?.initDataUnsafe?.user?.id ?? null);
   }, []);
 
   const isAdmin = userId != null && ADMIN_IDS.includes(userId);
-
-  useEffect(() => {
-    console.log(ADMIN_IDS);
-    console.log(userId);
-  },[userId, ADMIN_IDS]);
 
   return (
     <div className="tabs">

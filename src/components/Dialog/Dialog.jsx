@@ -1,10 +1,27 @@
 import React, { useEffect, useRef, useState } from "react";
 import "./Dialog.css";
+import {useTelegram} from "../../telegram/useTelegram";
 
 export default function Dialog({ isOpen, onClose, service, product }) {
+  const { MainButton } = useTelegram();
+
   const ref = useRef(null);
   const [login, setLogin] = useState("");
   const [password, setPassword] = useState("");
+
+  useEffect(() => {
+    MainButton.setParams({
+      text: 'Оплатить'
+    })
+  }, []);
+
+  useEffect(() => {
+    if(!login || !password) {
+      MainButton.hide();
+    }else{
+      MainButton.show();
+    }
+  }, [login, password]);
 
   // reset on open
   useEffect(() => {
@@ -42,7 +59,7 @@ export default function Dialog({ isOpen, onClose, service, product }) {
   const handleSubmit = (e) => {
     e.preventDefault();
     // Здесь позже подключите реальную оплату
-    console.log("Checkout:", { service, product, login, password: "***" });
+    console.log("Checkout:", { service, product, login, password: password });
   };
 
   return (
@@ -66,8 +83,6 @@ export default function Dialog({ isOpen, onClose, service, product }) {
             <span className="dialog__label">Пароль</span>
             <input type="password" value={password} onChange={(e) => setPassword(e.target.value)} placeholder="Введите пароль" required />
           </label>
-          {/* Локальная кнопка на случай запуска вне Telegram. В самом Telegram используйте MainButton */}
-          <button className="dialog__pay" type="submit">Оплатить</button>
         </form>
       </div>
     </dialog>

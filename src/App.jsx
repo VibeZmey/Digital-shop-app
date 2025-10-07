@@ -12,7 +12,6 @@ import "./styles/app.css";
 const LS_KEY = "tg-shop-data-v2"; // ВАЖНО: поменяли ключ, чтобы не брать старые .svg из localStorage
 
 export default function App() {
-  const { tg, MainButton } = useTelegram();
 
   const [data, setData] = useLocalStorage(LS_KEY, () => ({
     categories: [
@@ -91,35 +90,6 @@ export default function App() {
   };
 
   // MainButton — показать в момент оформления
-  useEffect(() => {
-    if (!MainButton) return;
-    const handleMainClick = () => {
-      const payload = {
-        type: "checkout",
-        category: selection.category?.name,
-        product: selection.product?.name
-      };
-      try {
-        tg?.sendData?.(JSON.stringify(payload));
-      } catch {}
-      tg?.HapticFeedback?.notificationOccurred?.("success");
-      tg?.showPopup?.({
-        title: "Оплата",
-        message: "Здесь вы добавите реальную оплату/инвойс.",
-        buttons: [{ id: "ok", type: "ok", text: "Ок" }]
-      });
-    };
-
-    if (checkoutOpen) {
-      MainButton.setText?.("Оплатить");
-      MainButton.show?.();
-      MainButton.onClick?.(handleMainClick);
-    } else {
-      MainButton.hide?.();
-      MainButton.offClick?.(handleMainClick);
-    }
-    return () => MainButton.offClick?.(handleMainClick);
-  }, [MainButton, checkoutOpen, selection, tg]);
 
   const categories = data.categories;
 
