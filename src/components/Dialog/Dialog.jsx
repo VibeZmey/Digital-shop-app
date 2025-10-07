@@ -21,7 +21,7 @@ export default function Dialog({ isOpen, onClose, service, product }) {
     }else{
       MainButton.show();
     }
-  }, [login, password]);
+  }, [MainButton, login, password]);
 
   // reset on open
   useEffect(() => {
