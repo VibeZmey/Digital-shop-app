@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect, useState } from "react";
+import React, { useCallback, useState } from "react";
 import Header from "./components/Header/Header.jsx";
 import Tabs from "./components/Tabs/Tabs.jsx";
 import CategoryAccordion from "./components/CategoryAccordion/CategoryAccordion.jsx";
@@ -6,7 +6,7 @@ import ProductCard from "./components/ProductCard/ProductCard.jsx";
 import Dialog from "./components/Dialog/Dialog.jsx";
 import AdminPanel from "./components/AdminPanel/AdminPanel.jsx";
 import { useLocalStorage } from "./hooks/useLocalStorage";
-import { useTelegram } from "./telegram/useTelegram";
+//import { useTelegram } from "./telegram/useTelegram";
 import "./styles/app.css";
 
 const LS_KEY = "tg-shop-data-v2"; // ВАЖНО: поменяли ключ, чтобы не брать старые .svg из localStorage
