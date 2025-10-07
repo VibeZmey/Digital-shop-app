@@ -13,7 +13,7 @@ export default function Dialog({ isOpen, onClose, service, product }) {
     MainButton.setParams({
       text: 'Оплатить'
     })
-  }, []);
+  }, [MainButton]);
 
   useEffect(() => {
     if(!login || !password) {
