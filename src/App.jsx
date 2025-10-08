@@ -6,12 +6,13 @@ import ProductCard from "./components/ProductCard/ProductCard.jsx";
 import Dialog from "./components/Dialog/Dialog.jsx";
 import AdminPanel from "./components/AdminPanel/AdminPanel.jsx";
 import { useLocalStorage } from "./hooks/useLocalStorage";
-//import { useTelegram } from "./telegram/useTelegram";
+import { useTelegram } from "./telegram/useTelegram";
 import "./styles/app.css";
 
 const LS_KEY = "tg-shop-data-v2"; // ВАЖНО: поменяли ключ, чтобы не брать старые .svg из localStorage
 
 export default function App() {
+  useTelegram();
   const tg = window?.Telegram?.WebApp ?? null;
 
   const [data, setData] = useLocalStorage(LS_KEY, () => ({
