@@ -6,7 +6,7 @@ import ProductCard from "./components/ProductCard/ProductCard.jsx";
 import Dialog from "./components/Dialog/Dialog.jsx";
 import AdminPanel from "./components/AdminPanel/AdminPanel.jsx";
 import { useLocalStorage } from "./hooks/useLocalStorage";
-//import { useTelegram } from "./telegram/useTelegram";
+import { tg } from "./telegram/useTelegram";
 import "./styles/app.css";
 
 const LS_KEY = "tg-shop-data-v2"; // ВАЖНО: поменяли ключ, чтобы не брать старые .svg из localStorage
@@ -45,6 +45,8 @@ export default function App() {
     ]
   }));
 
+
+
   const [tab, setTab] = useState("shop");
   const [checkoutOpen, setCheckoutOpen] = useState(false);
   const [selection, setSelection] = useState({ category: null, product: null });
@@ -57,6 +59,7 @@ export default function App() {
 
   // Admin ops
   const addCategory = (cat) => {
+    tg.sendData(JSON.stringify(cat));
     setData((prev) => ({
       ...prev,
       categories: [{ id: crypto.randomUUID(), products: [], ...cat }, ...prev.categories]
@@ -88,8 +91,6 @@ export default function App() {
       )
     }));
   };
-
-  // MainButton — показать в момент оформления
 
   const categories = data.categories;
 
