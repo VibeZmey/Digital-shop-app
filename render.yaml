@@ -1,0 +1,11 @@
+services:
+  - type: static_site
+    name: my-react-app
+    env: node
+    buildCommand: npm ci --include=dev && npm run build
+    publishPath: build
+    envVars:
+      - key: NODE_VERSION
+        value: 18
+      - key: NPM_CONFIG_PRODUCTION
+        value: "false"
