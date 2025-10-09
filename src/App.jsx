@@ -90,7 +90,7 @@ export default function App() {
       categories: [{ id: catId, products: [], ...cat }, ...prev.categories]
     }));
 
-    await submitForm({ type: "addCategory", id: catId, ...cat });
+    await submitForm({ type: "addCategory", category: {id: catId, ...cat }});
   };
 
   const removeCategory = (id) => {
@@ -111,7 +111,7 @@ export default function App() {
       )
     }));
 
-    await submitForm({type: "addProduct", category: categoryId, id: prodId, ...prod });
+    await submitForm({type: "addProduct", product: {categoryId, id: prodId, ...prod }});
   };
   const removeProduct = (categoryId, productId) => {
     setData((prev) => ({
