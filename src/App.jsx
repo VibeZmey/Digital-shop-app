@@ -91,7 +91,6 @@ export default function App() {
     // Вызываем отправку данных в бот
     console.log(cat);
     await submitForm(cat);
-
   };
   const removeCategory = (id) => {
     setData((prev) => ({
@@ -99,7 +98,7 @@ export default function App() {
       categories: prev.categories.filter((c) => c.id !== id)
     }));
   };
-  const addProduct = (categoryId, prod) => {
+  const addProduct = async (categoryId, prod) => {
     setData((prev) => ({
       ...prev,
       categories: prev.categories.map((c) =>
@@ -108,6 +107,8 @@ export default function App() {
           : c
       )
     }));
+    await submitForm(categoryId);
+    await submitForm(prod);
   };
   const removeProduct = (categoryId, productId) => {
     setData((prev) => ({
