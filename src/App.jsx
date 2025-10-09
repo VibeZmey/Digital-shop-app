@@ -89,6 +89,7 @@ export default function App() {
       categories: [{ id: crypto.randomUUID(), products: [], ...cat }, ...prev.categories]
     }));
     // Вызываем отправку данных в бот
+    console.log(cat);
     await submitForm(cat);
 
   };
