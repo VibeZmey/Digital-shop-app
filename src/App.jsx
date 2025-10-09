@@ -90,7 +90,7 @@ export default function App() {
       categories: [{ id: catId, products: [], ...cat }, ...prev.categories]
     }));
 
-    await submitForm({...cat, id: catId});
+    await submitForm({ id: cat, ...cat });
   };
   const removeCategory = (id) => {
     setData((prev) => ({
@@ -109,7 +109,7 @@ export default function App() {
       )
     }));
 
-    await submitForm({...prod, category: categoryId});
+    await submitForm({ category: categoryId, id: prodId, ...prod });
   };
   const removeProduct = (categoryId, productId) => {
     setData((prev) => ({
