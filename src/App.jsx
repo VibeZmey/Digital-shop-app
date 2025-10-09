@@ -89,9 +89,8 @@ export default function App() {
       ...prev,
       categories: [{ id: catId, products: [], ...cat }, ...prev.categories]
     }));
-    // Вызываем отправку данных в бот
-    console.log(cat);
-    await submitForm({...cat, catId});
+
+    await submitForm({id: catId, ...cat});
   };
   const removeCategory = (id) => {
     setData((prev) => ({
@@ -100,16 +99,17 @@ export default function App() {
     }));
   };
   const addProduct = async (categoryId, prod) => {
+    const prodId = crypto.randomUUID();
     setData((prev) => ({
       ...prev,
       categories: prev.categories.map((c) =>
         c.id === categoryId
-          ? { ...c, products: [{ id: crypto.randomUUID(), ...prod }, ...c.products] }
+          ? { ...c, products: [{ id: prodId, ...prod }, ...c.products] }
           : c
       )
     }));
-    await submitForm(categoryId);
-    await submitForm(prod);
+
+    await submitForm({category: categoryId, ...prod});
   };
   const removeProduct = (categoryId, productId) => {
     setData((prev) => ({
