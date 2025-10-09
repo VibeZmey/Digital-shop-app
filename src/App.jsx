@@ -90,14 +90,16 @@ export default function App() {
       categories: [{ id: catId, products: [], ...cat }, ...prev.categories]
     }));
 
-    await submitForm({ id: catId, ...cat });
+    await submitForm({ type: "addCategory", id: catId, ...cat });
   };
+
   const removeCategory = (id) => {
     setData((prev) => ({
       ...prev,
       categories: prev.categories.filter((c) => c.id !== id)
     }));
   };
+
   const addProduct = async (categoryId, prod) => {
     const prodId = crypto.randomUUID();
     setData((prev) => ({
@@ -109,7 +111,7 @@ export default function App() {
       )
     }));
 
-    await submitForm({ category: categoryId, id: prodId, ...prod });
+    await submitForm({type: "addProduct", category: categoryId, id: prodId, ...prod });
   };
   const removeProduct = (categoryId, productId) => {
     setData((prev) => ({
