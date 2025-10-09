@@ -79,12 +79,11 @@ export default function Dialog({ isOpen, onClose, service, product }) {
             <span className="dialog__label">Логин</span>
             <input value={login} onChange={(e) => setLogin(e.target.value)} placeholder="Введите логин" required />
           </label>
-          {product.requiresPassword ? (
-            <label className="dialog__field">
-              <span className="dialog__label">Пароль</span>
-              <input type="password" value={password} onChange={(e) => setPassword(e.target.value)} placeholder="Введите пароль" required />
-            </label>
-          ) : null}
+
+          <label className="dialog__field">
+            <span className="dialog__label">Пароль</span>
+            <input type="password" value={password} onChange={(e) => setPassword(e.target.value)} placeholder="Введите пароль" required />
+          </label>
         </form>
       </div>
     </dialog>
