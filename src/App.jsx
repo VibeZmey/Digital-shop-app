@@ -84,13 +84,14 @@ export default function App() {
 
   // Admin ops
   const addCategory = async (cat) => {
+    const catId = crypto.randomUUID();
     setData((prev) => ({
       ...prev,
-      categories: [{ id: crypto.randomUUID(), products: [], ...cat }, ...prev.categories]
+      categories: [{ id: catId, products: [], ...cat }, ...prev.categories]
     }));
     // Вызываем отправку данных в бот
     console.log(cat);
-    await submitForm(cat);
+    await submitForm({...cat, catId});
   };
   const removeCategory = (id) => {
     setData((prev) => ({

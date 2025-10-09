@@ -70,7 +70,7 @@ export default function AdminPanel({ data, addCategory, addProduct, removeCatego
         <button
           className="btn primary"
           onClick={() => {
-            addProduct(targetCat, { name: prodName.trim(), price: prodPrice.trim(), image: prodImage.trim() || "/icons/placeholder.png", requiresLogin });
+            addProduct(targetCat, { name: prodName.trim(), price: prodPrice.trim() || '0', image: prodImage.trim() || "/icons/placeholder.png", requiresLogin });
             setProdName(""); setProdPrice(""); setProdImage("");
           }}
           disabled={!canAddProd}
