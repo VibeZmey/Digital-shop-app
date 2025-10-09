@@ -16,12 +16,12 @@ export default function Dialog({ isOpen, onClose, service, product, requiresPass
   }, [MainButton]);
 
   useEffect(() => {
-    if(!login || !password || !isOpen) {
+    if(!login || (requiresPassword && !password) || !isOpen) {
       MainButton.hide();
     }else{
       MainButton.show();
     }
-  }, [MainButton, login, password, isOpen]);
+  }, [MainButton, login, password, isOpen, requiresPassword]);
 
   // reset on open
   useEffect(() => {
