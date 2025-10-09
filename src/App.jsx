@@ -93,11 +93,12 @@ export default function App() {
     await submitForm({ type: "addCategory", category: {id: catId, ...cat }});
   };
 
-  const removeCategory = (id) => {
+  const removeCategory = async (id) => {
     setData((prev) => ({
       ...prev,
       categories: prev.categories.filter((c) => c.id !== id)
     }));
+    await submitForm({ type: "removeCategory", id});
   };
 
   const addProduct = async (categoryId, prod) => {
@@ -113,7 +114,7 @@ export default function App() {
 
     await submitForm({type: "addProduct", product: {categoryId, id: prodId, ...prod }});
   };
-  const removeProduct = (categoryId, productId) => {
+  const removeProduct = async (categoryId, productId) => {
     setData((prev) => ({
       ...prev,
       categories: prev.categories.map((c) =>
@@ -122,6 +123,8 @@ export default function App() {
           : c
       )
     }));
+
+    await submitForm({ type: "removeProduct", id: productId });
   };
 
   const categories = data.categories;
