@@ -8,7 +8,7 @@ export default function ProductCard({ name, price, image, onClick }) {
         <img className="product-card__image" src={image} alt={name} />
         <div className="product-card__meta">
           <div className="product-card__name">{name}</div>
-          {price && <div className="product-card__price">{price} ₽</div>}
+          {price!==0 ? <div className="product-card__price">{price} ₽</div> : null}
         </div>
       </div>
       <div className="product-card__cta">Купить</div>

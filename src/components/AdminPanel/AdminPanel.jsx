@@ -11,7 +11,7 @@ export default function AdminPanel({ data, addCategory, addProduct, removeCatego
   const [prodName, setProdName] = useState("");
   const [prodPrice, setProdPrice] = useState("");
   const [prodImage, setProdImage] = useState("");
-  const [requiresLogin, setRequiresLogin] = useState(true);
+  const [requiresPassword, setRequiresPassword] = useState(true);
 
   const canAddCat = catName.trim().length > 0;
   const canAddProd = targetCat && prodName.trim().length > 0;
@@ -64,13 +64,13 @@ export default function AdminPanel({ data, addCategory, addProduct, removeCatego
           <input placeholder="/icons/subscription.png" value={prodImage} onChange={(e) => setProdImage(e.target.value)} />
         </div>
         <div className="row row--inline">
-          <label>Нужен логин/пароль?</label>
-          <input type="checkbox" checked={requiresLogin} onChange={(e) => setRequiresLogin(e.target.checked)} />
+          <label>Нужен пароль?</label>
+          <input type="checkbox" checked={requiresPassword} onChange={(e) => setRequiresPassword(e.target.checked)} />
         </div>
         <button
           className="btn primary"
           onClick={() => {
-            addProduct(targetCat, { name: prodName.trim(), price: Number(prodPrice.trim()) || 0, image: prodImage.trim() || "/icons/placeholder.png", requiresLogin });
+            addProduct(targetCat, { name: prodName.trim(), price: Number(prodPrice.trim()) || 0, image: prodImage.trim() || "/icons/placeholder.png", requiresPassword });
             setProdName(""); setProdPrice(""); setProdImage("");
           }}
           disabled={!canAddProd}

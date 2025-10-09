@@ -59,7 +59,7 @@ export default function Dialog({ isOpen, onClose, service, product }) {
   const handleSubmit = (e) => {
     e.preventDefault();
     // Здесь позже подключите реальную оплату
-    console.log("Checkout:", { service, product, login, password: password });
+    console.log("Checkout:", { service, product, login, password: password && null });
   };
 
   return (
@@ -79,10 +79,12 @@ export default function Dialog({ isOpen, onClose, service, product }) {
             <span className="dialog__label">Логин</span>
             <input value={login} onChange={(e) => setLogin(e.target.value)} placeholder="Введите логин" required />
           </label>
-          <label className="dialog__field">
-            <span className="dialog__label">Пароль</span>
-            <input type="password" value={password} onChange={(e) => setPassword(e.target.value)} placeholder="Введите пароль" required />
-          </label>
+          {product.requiresPassword ? (
+            <label className="dialog__field">
+              <span className="dialog__label">Пароль</span>
+              <input type="password" value={password} onChange={(e) => setPassword(e.target.value)} placeholder="Введите пароль" required />
+            </label>
+          ) : null}
         </form>
       </div>
     </dialog>
