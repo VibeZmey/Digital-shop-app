@@ -45,8 +45,8 @@ export default function App() {
         name: "Steam",
         icon: "/icons/steam.png",
         products: [
-          { id: crypto.randomUUID(), name: "Пополнение баланса", price: "", image: "/icons/replenish.png", requiresLogin: true },
-          { id: crypto.randomUUID(), name: "Gift Card", price: "", image: "/icons/gift-card.png", requiresLogin: false }
+          { id: crypto.randomUUID(), name: "Пополнение баланса", price: "", image: "/icons/replenish.png", requiresPassword: true },
+          { id: crypto.randomUUID(), name: "Gift Card", price: "", image: "/icons/gift-card.png", requiresPassword: false }
         ]
       },
       {
@@ -54,9 +54,9 @@ export default function App() {
         name: "Netflix",
         icon: "/icons/netflix.png",
         products: [
-          { id: crypto.randomUUID(), name: "Basic", price: "670", image: "/icons/subscription.png", requiresLogin: true },
-          { id: crypto.randomUUID(), name: "Standard", price: "960", image: "/icons/subscription.png", requiresLogin: true },
-          { id: crypto.randomUUID(), name: "Premium", price: "1150", image: "/icons/subscription.png", requiresLogin: true }
+          { id: crypto.randomUUID(), name: "Basic", price: "670", image: "/icons/subscription.png", requiresPassword: true },
+          { id: crypto.randomUUID(), name: "Standard", price: "960", image: "/icons/subscription.png", requiresPassword: true },
+          { id: crypto.randomUUID(), name: "Premium", price: "1150", image: "/icons/subscription.png", requiresPassword: true }
         ]
       },
       {
@@ -64,7 +64,7 @@ export default function App() {
         name: "Spotify",
         icon: "/icons/spotify.png",
         products: [
-          { id: crypto.randomUUID(), name: "Premium", price: "399", image: "/icons/subscription.png", requiresLogin: true }
+          { id: crypto.randomUUID(), name: "Premium", price: "399", image: "/icons/subscription.png", requiresPassword: true }
         ]
       }
     ]
@@ -165,6 +165,7 @@ export default function App() {
         onClose={closeCheckout}
         service={selection.category?.name}
         product={selection.product?.name}
+        requiresPassword={selection.product?.requiresPassword}
       />
     </div>
   );

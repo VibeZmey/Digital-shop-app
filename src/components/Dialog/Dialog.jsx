@@ -2,7 +2,7 @@ import React, { useEffect, useRef, useState } from "react";
 import "./Dialog.css";
 import {useTelegram} from "../../telegram/useTelegram";
 
-export default function Dialog({ isOpen, onClose, service, product }) {
+export default function Dialog({ isOpen, onClose, service, product, requiresPassword }) {
   const { MainButton } = useTelegram();
 
   const ref = useRef(null);
@@ -79,7 +79,7 @@ export default function Dialog({ isOpen, onClose, service, product }) {
             <span className="dialog__label">Логин</span>
             <input value={login} onChange={(e) => setLogin(e.target.value)} placeholder="Введите логин" required />
           </label>
-          {product?.requiresPassword ? (
+          {requiresPassword ? (
             <label className="dialog__field">
               <span className="dialog__label">Пароль</span>
               <input type="password" value={password} onChange={(e) => setPassword(e.target.value)} placeholder="Введите пароль" required />
