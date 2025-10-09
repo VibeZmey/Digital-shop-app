@@ -19,6 +19,25 @@ export default function App() {
     tg?.ready && tg.ready();
   }, [tg]);
 
+  async function submitForm(payload) {
+    const body = { payload, initData: tg.initData };
+
+    const res = await fetch('https://tetrasyllabical-unestablishable-betsey.ngrok-free.dev/api/submit', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(body),
+    });
+
+    if (!res.ok) {
+      const t = await res.text().catch(() => '');
+      tg.showAlert(`Ошибка: ${res.status} ${t}`);
+      return;
+    }
+
+    const data = await res.json();
+    tg.showPopup({ title: 'Готово', message: data.message || 'ОК', buttons: [{ type: 'close' }] });
+  }
+
   const [data, setData] = useLocalStorage(LS_KEY, () => ({
     categories: [
       {
@@ -57,15 +76,6 @@ export default function App() {
   const [checkoutOpen, setCheckoutOpen] = useState(false);
   const [selection, setSelection] = useState({ category: null, product: null });
 
-  const sendToTelegramBot = (payload) => {
-    if (tg && tg.sendData) {
-      tg.sendData(JSON.stringify(payload));
-      // Можно показать уведомление/alert
-      alert("Данные отправлены в Telegram бот!");
-    } else {
-      alert("WebApp API не инициализирован! Откройте приложение через Telegram.");
-    }
-  };
   const openCheckout = useCallback((category, product) => {
     setSelection({ category, product });
     setCheckoutOpen(true);
@@ -73,13 +83,14 @@ export default function App() {
   const closeCheckout = useCallback(() => setCheckoutOpen(false), []);
 
   // Admin ops
-  const addCategory = (cat) => {
+  const addCategory = async (cat) => {
     setData((prev) => ({
       ...prev,
       categories: [{ id: crypto.randomUUID(), products: [], ...cat }, ...prev.categories]
     }));
     // Вызываем отправку данных в бот
-    sendToTelegramBot({ event: "addCategory", category: cat });
+    await submitForm(cat);
+
   };
   const removeCategory = (id) => {
     setData((prev) => ({
