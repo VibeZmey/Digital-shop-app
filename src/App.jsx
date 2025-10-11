@@ -138,10 +138,10 @@ export default function App() {
 
       {tab === "shop" && (
         <div className="shop">
-          {categories.map((cat) => (
+          {isLoading ? <div className="empty">Загрузка товаров...</div> :
+          categories.map((cat) => (
             <CategoryAccordion key={cat.id} title={cat.name} icon={cat.icon}>
               <div className="product-grid">
-                {isLoading && <div className="empty">Загрузка товаров...</div>}
                 {cat.products.length === 0 && <div className="empty">Нет товаров</div>}
                 {cat.products.map((p) => (
                   <ProductCard
