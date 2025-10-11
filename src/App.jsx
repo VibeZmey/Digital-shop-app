@@ -47,7 +47,6 @@ export default function App() {
     setIsLoading(true);
 
     try {
-      // Проверяем кеш, если не принудительное обновление
       if (!forceRefresh) {
         const cached = localStorage.getItem(CACHE_KEY);
         const cacheTime = localStorage.getItem(`${CACHE_KEY}_time`);
@@ -63,14 +62,14 @@ export default function App() {
         }
       }
 
-      console.log('Загружаем с сервера...');
       const response = await fetch('https://tetrasyllabical-unestablishable-betsey.ngrok-free.dev/api/shop-data', {
         method: 'GET',
         headers: {
           'Accept': 'application/json',
           'Content-Type': 'application/json',
           'ngrok-skip-browser-warning': 'true'
-        }
+        },
+        initData: tg.initData,
       });
 
       if (!response.ok) {
