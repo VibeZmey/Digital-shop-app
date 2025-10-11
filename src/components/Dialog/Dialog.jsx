@@ -3,7 +3,7 @@ import "./Dialog.css";
 import {useTelegram} from "../../telegram/useTelegram";
 
 export default function Dialog({ isOpen, onClose, service, product, requiresPassword }) {
-  const { MainButton } = useTelegram();
+  const { MainButton, tg } = useTelegram();
 
   const ref = useRef(null);
   const [login, setLogin] = useState("");
@@ -12,6 +12,13 @@ export default function Dialog({ isOpen, onClose, service, product, requiresPass
   useEffect(() => {
     MainButton.setParams({
       text: 'Оплатить'
+    })
+    MainButton.onClick(()=>{
+      tg.showPopup({
+        title: "Оформление заказа",
+        message: "✅Ваш заказ успешно создан",
+        buttons: [{type: "close", text: "ОК"}],
+      })
     })
   }, [MainButton]);
 
