@@ -13,7 +13,8 @@ header.app-header {
 header.app-header img {
   width: 32px;
   height: 32px;
-  border-radius: 16px;
+  border-radius: var(--radius);
+  background-color: var(--app-bg);
 }
 header.app-header .brand {
   display: flex;
