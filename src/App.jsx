@@ -1,4 +1,4 @@
-import React, { useCallback, useState } from "react";
+import React, {useCallback, useEffect, useState} from "react";
 import Header from "./components/Header/Header.jsx";
 import Tabs from "./components/Tabs/Tabs.jsx";
 import CategoryAccordion from "./components/CategoryAccordion/CategoryAccordion.jsx";
@@ -19,6 +19,10 @@ export default function App() {
     tg?.ready && tg.ready();
   }, [tg]);
 
+  useEffect(() => {
+    tg.showPopup({ title: 'СРАБОТАЛ USE EFF' });
+  }, []);
+
   async function submitForm(payload) {
     const body = { payload, initData: tg.initData };
 
@@ -31,11 +35,10 @@ export default function App() {
     if (!res.ok) {
       const t = await res.text().catch(() => '');
       tg.showAlert(`Ошибка: ${res.status} ${t}`);
-      return;
     }
 
-    const data = await res.json();
-    tg.showPopup({ title: 'Готово', message: data.message || 'ОК', buttons: [{ type: 'close' }] });
+    // const data = await res.json();
+    // tg.showPopup({ title: 'Готово', message: data.message || 'ОК', buttons: [{ type: 'close' }] });
   }
 
   const [data, setData] = useLocalStorage(LS_KEY, () => ({
