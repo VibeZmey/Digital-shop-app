@@ -61,7 +61,8 @@ export default function App() {
           }
         }
       }
-
+      console.log('initData: ', tg.initData);
+      console.log(typeof tg.initData);
       const response = await fetch('https://tetrasyllabical-unestablishable-betsey.ngrok-free.dev/api/shop-data', {
         method: 'GET',
         headers: {
