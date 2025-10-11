@@ -5,11 +5,8 @@ import CategoryAccordion from "./components/CategoryAccordion/CategoryAccordion.
 import ProductCard from "./components/ProductCard/ProductCard.jsx";
 import Dialog from "./components/Dialog/Dialog.jsx";
 import AdminPanel from "./components/AdminPanel/AdminPanel.jsx";
-import { useLocalStorage } from "./hooks/useLocalStorage";
 //import { useTelegram } from "./telegram/useTelegram";
 import "./styles/app.css";
-
-const LS_KEY = "tg-shop-data-v2"; // ВАЖНО: поменяли ключ, чтобы не брать старые .svg из localStorage
 
 export default function App() {
   const tg = window?.Telegram?.WebApp ?? null;
@@ -19,13 +16,6 @@ export default function App() {
     tg?.ready && tg.ready();
   }, [tg]);
 
-  useEffect(() => {
-    tg.showPopup({
-      title: 'СРАБОТАЛ USE EFF',
-      message: 'useEffect отработал успешно',
-      buttons: [{ type: 'close' }] // ОБЯЗАТЕЛЬНЫЙ параметр
-    });
-  }, []);
 
   async function submitForm(payload) {
     const body = { payload, initData: tg.initData };
@@ -45,7 +35,7 @@ export default function App() {
     // tg.showPopup({ title: 'Готово', message: data.message || 'ОК', buttons: [{ type: 'close' }] });
   }
 
-  const [data, setData] = useLocalStorage(LS_KEY, () => ({
+  const [data, setData] = useState({
     categories: [
       {
         id: crypto.randomUUID(),
@@ -75,8 +65,24 @@ export default function App() {
         ]
       }
     ]
-  }));
+  });
+  const [isLoading, setIsLoading] = useState(false);
+  const loadData = async () => {
+    setIsLoading(true);
+    try {
+      const response = await fetch('https://tetrasyllabical-unestablishable-betsey.ngrok-free.dev/api/shop-data');
+      setData(await response.json());
 
+    } catch (error) {
+      console.error('Ошибка загрузки товаров:', error);
+      tg.showAlert('Ошибка загрузки товаров');
+    } finally {
+      setIsLoading(false);
+    }
+  }
+  useEffect(async () => {
+    await loadData();
+  }, [])
 
 
   const [tab, setTab] = useState("shop");
@@ -146,6 +152,7 @@ export default function App() {
           {categories.map((cat) => (
             <CategoryAccordion key={cat.id} title={cat.name} icon={cat.icon}>
               <div className="product-grid">
+                {isLoading && <div className="empty">Загрузка товаров...</div>}
                 {cat.products.length === 0 && <div className="empty">Нет товаров</div>}
                 {cat.products.map((p) => (
                   <ProductCard
