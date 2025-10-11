@@ -61,7 +61,7 @@ export default function App() {
           }
         }
       }
-
+      // TODO: сделать валидацию get запроса, узнать как это делать
       const response = await fetch('https://tetrasyllabical-unestablishable-betsey.ngrok-free.dev/api/shop-data', {
         method: 'GET',
         headers: {
@@ -69,7 +69,6 @@ export default function App() {
           'Content-Type': 'application/json',
           'ngrok-skip-browser-warning': 'true'
         },
-        body: JSON.stringify({initDats: tg.initData}),
       });
 
       if (!response.ok) {
