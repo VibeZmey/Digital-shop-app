@@ -20,7 +20,11 @@ export default function App() {
   }, [tg]);
 
   useEffect(() => {
-    tg.showPopup({ title: 'СРАБОТАЛ USE EFF' });
+    tg.showPopup({
+      title: 'СРАБОТАЛ USE EFF',
+      message: 'useEffect отработал успешно',
+      buttons: [{ type: 'close' }] // ОБЯЗАТЕЛЬНЫЙ параметр
+    });
   }, []);
 
   async function submitForm(payload) {
