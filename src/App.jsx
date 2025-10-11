@@ -35,7 +35,7 @@ export default function App() {
     // tg.showPopup({ title: 'Готово', message: data.message || 'ОК', buttons: [{ type: 'close' }] });
   }
 
-  const [data, setData] = useState({});
+  const [data, setData] = useState({ categories: [] });
   const [isLoading, setIsLoading] = useState(false);
   const loadData = async () => {
     setIsLoading(true);
