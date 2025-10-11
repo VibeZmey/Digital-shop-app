@@ -35,37 +35,7 @@ export default function App() {
     // tg.showPopup({ title: 'Готово', message: data.message || 'ОК', buttons: [{ type: 'close' }] });
   }
 
-  const [data, setData] = useState({
-    categories: [
-      {
-        id: crypto.randomUUID(),
-        name: "Steam",
-        icon: "/icons/steam.png",
-        products: [
-          { id: crypto.randomUUID(), name: "Пополнение баланса", price: "", image: "/icons/replenish.png", requiresPassword: true },
-          { id: crypto.randomUUID(), name: "Gift Card", price: "", image: "/icons/gift-card.png", requiresPassword: false }
-        ]
-      },
-      {
-        id: crypto.randomUUID(),
-        name: "Netflix",
-        icon: "/icons/netflix.png",
-        products: [
-          { id: crypto.randomUUID(), name: "Basic", price: "670", image: "/icons/subscription.png", requiresPassword: true },
-          { id: crypto.randomUUID(), name: "Standard", price: "960", image: "/icons/subscription.png", requiresPassword: true },
-          { id: crypto.randomUUID(), name: "Premium", price: "1150", image: "/icons/subscription.png", requiresPassword: true }
-        ]
-      },
-      {
-        id: crypto.randomUUID(),
-        name: "Spotify",
-        icon: "/icons/spotify.png",
-        products: [
-          { id: crypto.randomUUID(), name: "Premium", price: "399", image: "/icons/subscription.png", requiresPassword: true }
-        ]
-      }
-    ]
-  });
+  const [data, setData] = useState({});
   const [isLoading, setIsLoading] = useState(false);
   const loadData = async () => {
     setIsLoading(true);
