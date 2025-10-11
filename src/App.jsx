@@ -69,8 +69,8 @@ export default function App() {
       setIsLoading(false);
     }
   }
-  useEffect(async () => {
-    await loadData();
+  useEffect(() => {
+    loadData();
   }, [])
 
 
