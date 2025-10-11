@@ -37,9 +37,6 @@ export default function App() {
       const t = await res.text().catch(() => '');
       tg.showAlert(`Ошибка: ${res.status} ${t}`);
     }
-
-    // const data = await res.json();
-    // tg.showPopup({ title: 'Готово', message: data.message || 'ОК', buttons: [{ type: 'close' }] });
   }
 
   const [data, setData] = useState({ categories: [] });

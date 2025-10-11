@@ -21,7 +21,11 @@ export default function Dialog({ isOpen, onClose, service, product, requiresPass
       });
       onClose();
     });
-
+    tg.showPopup({
+      title: "Оформление заказа",
+      message: "✅Ваш заказ успешно создан",
+      buttons: [{type: "close", text: "ОК"}],
+    });
   }, [MainButton]);
 
   useEffect(() => {
