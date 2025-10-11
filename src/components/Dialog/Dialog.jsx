@@ -18,8 +18,9 @@ export default function Dialog({ isOpen, onClose, service, product, requiresPass
         title: "Оформление заказа",
         message: "✅Ваш заказ успешно создан",
         buttons: [{type: "close", text: "ОК"}],
-      })
-    })
+      });
+    });
+    onClose();
   }, [MainButton]);
 
   useEffect(() => {
