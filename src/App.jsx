@@ -75,14 +75,26 @@ export default function App() {
         headers: {
           'Accept': 'application/json',
           'Content-Type': 'application/json',
-          'ngrok-skip-browser-warning': 'true' // Пропуск предупреждения ngrok
+          'ngrok-skip-browser-warning': 'true'
         }
       });
-      setData(await response.json());
+
+      // ДОБАВЬ ЭТУ ПРОВЕРКУ
+      console.log('Response status:', response.status);
+      console.log('Content-Type:', response.headers.get('content-type'));
+
+      if (!response.ok) {
+        const errorText = await response.text();
+        console.error('Server error:', errorText);
+      }
+
+      const data = await response.json();
+      console.log('Parsed data:', data);
+      setData(data.data);
 
     } catch (error) {
       console.error('Ошибка загрузки товаров:', error);
-      tg.showAlert('Ошибка загрузки товаров');
+      tg.showAlert(`Ошибка загрузки товаров: ${error.message}`);
     } finally {
       setIsLoading(false);
     }
