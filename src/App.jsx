@@ -8,12 +8,19 @@ import AdminPanel from "./components/AdminPanel/AdminPanel.jsx";
 //import { useTelegram } from "./telegram/useTelegram";
 import "./styles/app.css";
 
+const CACHE_KEY = 'shop_data';
+const CACHE_DURATION = 5 * 60 * 1000; // 5 минут
+
 export default function App() {
   const tg = window?.Telegram?.WebApp ?? null;
 
   // 2. Можно вызвать tg.ready(), чтобы Telegram корректно инициализировал WebApp
   React.useEffect(() => {
-    tg?.ready && tg.ready();
+    if (tg?.ready) {
+      tg.ready();
+      // Начинаем загрузку данных сразу после ready
+      loadData();
+    }
   }, [tg]);
 
 
@@ -37,9 +44,29 @@ export default function App() {
 
   const [data, setData] = useState({ categories: [] });
   const [isLoading, setIsLoading] = useState(false);
-  const loadData = async () => {
+
+
+  const loadData = async (forceRefresh = false) => {
     setIsLoading(true);
+
     try {
+      // Проверяем кеш, если не принудительное обновление
+      if (!forceRefresh) {
+        const cached = localStorage.getItem(CACHE_KEY);
+        const cacheTime = localStorage.getItem(`${CACHE_KEY}_time`);
+
+        if (cached && cacheTime) {
+          const age = Date.now() - parseInt(cacheTime);
+          if (age < CACHE_DURATION) {
+            console.log('Загружено из кеша');
+            setData(JSON.parse(cached));
+            setIsLoading(false);
+            return;
+          }
+        }
+      }
+
+      console.log('Загружаем с сервера...');
       const response = await fetch('https://tetrasyllabical-unestablishable-betsey.ngrok-free.dev/api/shop-data', {
         method: 'GET',
         headers: {
@@ -49,22 +76,35 @@ export default function App() {
         }
       });
 
-      // ДОБАВЬ ЭТУ ПРОВЕРКУ
-      console.log('Response status:', response.status);
-      console.log('Content-Type:', response.headers.get('content-type'));
-
       if (!response.ok) {
-        const errorText = await response.text();
-        console.error('Server error:', errorText);
+        console.log("Ошибка");
       }
 
-      const data = await response.json();
-      console.log('Parsed data:', data);
-      setData(data.data);
+      const result = await response.json();
+
+      if (result.success && result.data) {
+        setData(result.data);
+
+        // Сохраняем в кеш
+        localStorage.setItem(CACHE_KEY, JSON.stringify(result.data));
+        localStorage.setItem(`${CACHE_KEY}_time`, Date.now().toString());
+
+        console.log('Данные сохранены в кеш');
+      }
 
     } catch (error) {
-      console.error('Ошибка загрузки товаров:', error);
-      tg.showAlert(`Ошибка загрузки товаров: ${error.message}`);
+      console.error('Ошибка загрузки:', error);
+
+      // Пытаемся загрузить из кеша даже если он устарел
+      const cached = localStorage.getItem(CACHE_KEY);
+      if (cached) {
+        console.log('Загружаем устаревший кеш как fallback');
+        setData(JSON.parse(cached));
+        tg?.showAlert('Показаны сохранённые данные. Проверьте подключение.');
+      } else {
+        setData({ categories: [] });
+        tg?.showAlert(`Ошибка: ${error.message}`);
+      }
     } finally {
       setIsLoading(false);
     }
