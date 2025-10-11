@@ -70,7 +70,14 @@ export default function App() {
   const loadData = async () => {
     setIsLoading(true);
     try {
-      const response = await fetch('https://tetrasyllabical-unestablishable-betsey.ngrok-free.dev/api/shop-data');
+      const response = await fetch('https://tetrasyllabical-unestablishable-betsey.ngrok-free.dev/api/shop-data', {
+        method: 'GET',
+        headers: {
+          'Accept': 'application/json',
+          'Content-Type': 'application/json',
+          'ngrok-skip-browser-warning': 'true' // Пропуск предупреждения ngrok
+        }
+      });
       setData(await response.json());
 
     } catch (error) {
