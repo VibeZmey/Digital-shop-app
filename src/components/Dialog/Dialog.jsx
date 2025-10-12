@@ -12,17 +12,14 @@ export default function Dialog({ isOpen, onClose, service, product, requiresPass
   useEffect(() => {
     MainButton.setParams({
       text: 'Оплатить'
-    })
-    MainButton.onClick(async ()=>{
+    });
+
+    const handleClick = async () => {
       const body = {payload: {type: 'addOrder', product, login, password}, initData: tg.initData};
       console.log(body);
       const response = await fetch('https://tetrasyllabical-unestablishable-betsey.ngrok-free.dev/api/order', {
         method: 'POST',
-        headers: {
-          'Accept': 'application/json',
-          'Content-Type': 'application/json',
-          'ngrok-skip-browser-warning': 'true'
-        },
+        headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(body),
       });
       if(response.ok){
@@ -30,17 +27,23 @@ export default function Dialog({ isOpen, onClose, service, product, requiresPass
           title: "Оформление заказа",
           message: "✅Ваш заказ успешно создан",
           buttons: [{type: "close", text: "ОК"}],
-        })
+        });
       }else{
         tg.showPopup({
           title: "Оформление заказа",
           message: "❌Ошибка создания заказа",
           buttons: [{type: "close", text: "ОК"}],
-        })
+        });
       }
       onClose();
-    });
-  }, [MainButton]);
+    };
+
+    MainButton.onClick(handleClick);
+
+    return () => {
+      MainButton.offClick(handleClick);
+    };
+  }, [MainButton, login, password, product, tg, onClose]);
 
   useEffect(() => {
     if(!login || (requiresPassword && !password) || !isOpen) {
