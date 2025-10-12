@@ -199,7 +199,7 @@ export default function App() {
               <OrderCard
                 name={order.name}
                 price={order.price}
-                image={order.image}
+                image={order.image_path}
                 status={order.status}
                 onClick={()=>{}}
               />
