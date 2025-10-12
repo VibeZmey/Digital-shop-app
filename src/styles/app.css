@@ -69,6 +69,11 @@ header.app-header .brand-sub {
   padding: 12px;
   color: var(--app-hint);
 }
+.orders {
+  display: grid;
+  gap: 8px;
+  padding: 8px;
+}
 
 /* Admin shared */
 .panel {

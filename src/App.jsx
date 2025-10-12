@@ -5,15 +5,15 @@ import CategoryAccordion from "./components/CategoryAccordion/CategoryAccordion.
 import ProductCard from "./components/ProductCard/ProductCard.jsx";
 import Dialog from "./components/Dialog/Dialog.jsx";
 import AdminPanel from "./components/AdminPanel/AdminPanel.jsx";
-//import { useTelegram } from "./telegram/useTelegram";
+//import OrderCard from "./components/OrderCard/OrderCard.jsx";
+import { useTelegram } from "./telegram/useTelegram";
 import "./styles/app.css";
-import Orders from "./components/Orders/Orders";
 
 const CACHE_KEY = 'shop_data';
 const CACHE_DURATION = 5 * 60 * 1000; // 5 минут
 
 export default function App() {
-  const tg = window?.Telegram?.WebApp ?? null;
+  const {tg} = useTelegram();
 
   React.useEffect(() => {
     if (tg?.ready) {
@@ -41,7 +41,7 @@ export default function App() {
 
   const [data, setData] = useState({ categories: [] });
   const [isLoading, setIsLoading] = useState(false);
-
+  //const [orders, setOrders] = useState({ categories: [] });
 
   const loadData = async (forceRefresh = false) => {
     setIsLoading(true);
@@ -62,7 +62,7 @@ export default function App() {
         }
       }
       // TODO: сделать валидацию get запроса, узнать как это делать
-      const response = await fetch('https://tetrasyllabical-unestablishable-betsey.ngrok-free.dev/api/shop-data', {
+      const response = await fetch(`https://tetrasyllabical-unestablishable-betsey.ngrok-free.dev/api/shop-data?initData=${encodeURIComponent(window.Telegram.WebApp.initData)}`, {
         method: 'GET',
         headers: {
           'Accept': 'application/json',
@@ -78,7 +78,7 @@ export default function App() {
       const result = await response.json();
 
       if (result.success && result.data) {
-        setData(result.data);
+        setData(result.data.categories);
 
         // Сохраняем в кеш
         localStorage.setItem(CACHE_KEY, JSON.stringify(result.data));
@@ -192,9 +192,21 @@ export default function App() {
           ))}
         </div>
       )}
-      {tab === "orders" &&(
-        <Orders />
-      )}
+      {/*{tab === "orders" &&(*/}
+      {/*  <div className="orders">*/}
+      {/*    {orders.length === 0 && (<div className="empty">Нет заказов</div>)}*/}
+      {/*    {isLoading ? <div className="empty">Загрузка заказов...</div> :*/}
+      {/*      orders.map((order) => (*/}
+      {/*        <OrderCard*/}
+      {/*          name={order.name}*/}
+      {/*          price={order.price}*/}
+      {/*          image={order.image}*/}
+      {/*          status={order.status}*/}
+      {/*          onClick={()=>{}}*/}
+      {/*        />*/}
+      {/*      ))}*/}
+      {/*  </div>*/}
+      {/*)}*/}
 
       {tab === "admin" && (
         <AdminPanel
