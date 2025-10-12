@@ -86,22 +86,17 @@ export default function Dialog({ isOpen, onClose, service, product, requiresPass
     };
   }, [onClose]);
 
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    // Здесь позже подключите реальную оплату
-    console.log("Checkout:", { service, product, login, password: password && null });
-  };
 
   return (
     <dialog ref={ref} className="dialog" aria-labelledby="checkout-title">
       <button className="dialog__close" aria-label="Закрыть" onClick={onClose}>×</button>
       <div className="dialog__body">
         <h2 id="checkout-title" className="dialog__title">Оформление заказа</h2>
-        {(service || product) && (
+        {(service?.name || product?.name) && (
           <div className="dialog__meta">
-            {service && <span className="dialog__service">{service}</span>}
-            {service && product && <span className="dialog__dash"> — </span>}
-            {product && <span className="dialog__product">{product}</span>}
+            {service?.name && <span className="dialog__service">{service?.name}</span>}
+            {service?.name && product?.name && <span className="dialog__dash"> — </span>}
+            {product?.name && <span className="dialog__product">{product?.name}</span>}
           </div>
         )}
         <form className="dialog__form" onSubmit={handleSubmit}>

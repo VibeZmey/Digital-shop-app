@@ -205,8 +205,8 @@ export default function App() {
       <Dialog
         isOpen={checkoutOpen}
         onClose={closeCheckout}
-        service={selection.category?.name}
-        product={selection.product?.name}
+        service={selection.category}
+        product={selection.product}
         requiresPassword={selection.product?.requiresPassword}
       />
     </div>
