@@ -39,9 +39,8 @@ export default function App() {
     }
   }
 
-  const [data, setData] = useState({ categories: [] });
+  const [data, setData] = useState({ categories: [], orders: [] });
   const [isLoading, setIsLoading] = useState(false);
-  const [orders, setOrders] = useState({ orders: [] });
 
   const loadData = async (forceRefresh = false) => {
     setIsLoading(true);
@@ -79,7 +78,6 @@ export default function App() {
 
       if (result.success && result.data) {
         setData(result.data.categories);
-        setOrders(result.data.orders);
         // Сохраняем в кеш
         localStorage.setItem(CACHE_KEY, JSON.stringify(result.data));
         localStorage.setItem(`${CACHE_KEY}_time`, Date.now().toString());
@@ -94,12 +92,10 @@ export default function App() {
       const cached = localStorage.getItem(CACHE_KEY);
       if (cached) {
         console.log('Загружаем устаревший кеш как fallback');
-        setData(JSON.parse(cached).categories);
-        setOrders(JSON.parse(cached).orders);
+        setData(JSON.parse(cached));
         tg?.showAlert('Показаны сохранённые данные. Проверьте подключение.');
       } else {
-        setData({ categories: [] });
-        setOrders({ orders: [] });
+        setData({ categories: [], orders: [] });
         tg?.showAlert(`Ошибка: ${error.message}`);
       }
     } finally {
@@ -167,6 +163,7 @@ export default function App() {
   };
 
   const categories = data.categories;
+  const orders = data.orders;
 
   return (
     <div className="app">
@@ -198,7 +195,7 @@ export default function App() {
         <div className="orders">
           {orders.length === 0 && (<div className="empty">Нет заказов</div>)}
           {isLoading ? <div className="empty">Загрузка заказов...</div> :
-            orders.orders.map((order) => (
+            orders.map((order) => (
               <OrderCard
                 name={order.name}
                 price={order.price}
