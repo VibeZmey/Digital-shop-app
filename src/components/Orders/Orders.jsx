@@ -1,5 +1,5 @@
 //import React, { useState } from "react";
-import "./AdminPanel.css";
+import "./Orders.css";
 import OrderCard from "../OrderCard/OrderCard.jsx";
 
 export default function Orders() {
