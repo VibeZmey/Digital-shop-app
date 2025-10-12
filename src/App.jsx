@@ -5,7 +5,7 @@ import CategoryAccordion from "./components/CategoryAccordion/CategoryAccordion.
 import ProductCard from "./components/ProductCard/ProductCard.jsx";
 import Dialog from "./components/Dialog/Dialog.jsx";
 import AdminPanel from "./components/AdminPanel/AdminPanel.jsx";
-//import OrderCard from "./components/OrderCard/OrderCard.jsx";
+import OrderCard from "./components/OrderCard/OrderCard.jsx";
 import { useTelegram } from "./telegram/useTelegram";
 import "./styles/app.css";
 
@@ -41,7 +41,7 @@ export default function App() {
 
   const [data, setData] = useState({ categories: [] });
   const [isLoading, setIsLoading] = useState(false);
-  //const [orders, setOrders] = useState({ categories: [] });
+  const [orders, setOrders] = useState({ orders: [] });
 
   const loadData = async (forceRefresh = false) => {
     setIsLoading(true);
@@ -79,7 +79,7 @@ export default function App() {
 
       if (result.success && result.data) {
         setData(result.data.categories);
-
+        setOrders(result.data.orders);
         // Сохраняем в кеш
         localStorage.setItem(CACHE_KEY, JSON.stringify(result.data));
         localStorage.setItem(`${CACHE_KEY}_time`, Date.now().toString());
@@ -192,21 +192,21 @@ export default function App() {
           ))}
         </div>
       )}
-      {/*{tab === "orders" &&(*/}
-      {/*  <div className="orders">*/}
-      {/*    {orders.length === 0 && (<div className="empty">Нет заказов</div>)}*/}
-      {/*    {isLoading ? <div className="empty">Загрузка заказов...</div> :*/}
-      {/*      orders.map((order) => (*/}
-      {/*        <OrderCard*/}
-      {/*          name={order.name}*/}
-      {/*          price={order.price}*/}
-      {/*          image={order.image}*/}
-      {/*          status={order.status}*/}
-      {/*          onClick={()=>{}}*/}
-      {/*        />*/}
-      {/*      ))}*/}
-      {/*  </div>*/}
-      {/*)}*/}
+      {tab === "orders" &&(
+        <div className="orders">
+          {orders.length === 0 && (<div className="empty">Нет заказов</div>)}
+          {isLoading ? <div className="empty">Загрузка заказов...</div> :
+            orders.map((order) => (
+              <OrderCard
+                name={order.name}
+                price={order.price}
+                image={order.image}
+                status={order.status}
+                onClick={()=>{}}
+              />
+            ))}
+        </div>
+      )}
 
       {tab === "admin" && (
         <AdminPanel
