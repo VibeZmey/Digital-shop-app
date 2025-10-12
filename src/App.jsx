@@ -7,6 +7,7 @@ import Dialog from "./components/Dialog/Dialog.jsx";
 import AdminPanel from "./components/AdminPanel/AdminPanel.jsx";
 //import { useTelegram } from "./telegram/useTelegram";
 import "./styles/app.css";
+import Orders from "./components/Orders/Orders";
 
 const CACHE_KEY = 'shop_data';
 const CACHE_DURATION = 5 * 60 * 1000; // 5 минут
@@ -190,6 +191,9 @@ export default function App() {
             </CategoryAccordion>
           ))}
         </div>
+      )}
+      {tab === "orders" &&(
+        <Orders />
       )}
 
       {tab === "admin" && (

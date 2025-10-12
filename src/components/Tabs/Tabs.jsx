@@ -21,6 +21,13 @@ export default function Tabs({ value, onChange }) {
         Магазин
       </button>
 
+      <button
+        className={value === "orders" ? "tab active" : "tab"}
+        onClick={() => onChange("orders")}
+      >
+        Мои заказы
+      </button>
+
       {isAdmin && (
         <button
           className={value === "admin" ? "tab active" : "tab"}
