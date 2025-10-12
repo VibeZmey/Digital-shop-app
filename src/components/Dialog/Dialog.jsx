@@ -99,7 +99,7 @@ export default function Dialog({ isOpen, onClose, service, product, requiresPass
             {product?.name && <span className="dialog__product">{product?.name}</span>}
           </div>
         )}
-        <form className="dialog__form" onSubmit={handleSubmit}>
+        <form className="dialog__form">
           <label className="dialog__field">
             <span className="dialog__label">Логин</span>
             <input value={login} onChange={(e) => setLogin(e.target.value)} placeholder="Введите логин" required />
