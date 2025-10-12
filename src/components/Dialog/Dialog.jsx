@@ -15,6 +15,7 @@ export default function Dialog({ isOpen, onClose, service, product, requiresPass
     })
     MainButton.onClick(async ()=>{
       const body = {payload: {type: 'addOrder', product, login, password}, initData: tg.initData};
+      console.log(body);
       const response = await fetch('https://tetrasyllabical-unestablishable-betsey.ngrok-free.dev/api/order', {
         method: 'POST',
         headers: {
