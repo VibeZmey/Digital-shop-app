@@ -14,7 +14,6 @@ const CACHE_DURATION = 5 * 60 * 1000; // 5 минут
 export default function App() {
   const tg = window?.Telegram?.WebApp ?? null;
 
-  // 2. Можно вызвать tg.ready(), чтобы Telegram корректно инициализировал WebApp
   React.useEffect(() => {
     if (tg?.ready) {
       tg.ready();
