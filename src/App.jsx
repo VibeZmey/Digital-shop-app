@@ -77,7 +77,7 @@ export default function App() {
       const result = await response.json();
 
       if (result.success && result.data) {
-        setData(result.data.categories);
+        setData(result.data);
         // Сохраняем в кеш
         localStorage.setItem(CACHE_KEY, JSON.stringify(result.data));
         localStorage.setItem(`${CACHE_KEY}_time`, Date.now().toString());
