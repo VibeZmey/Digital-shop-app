@@ -61,7 +61,7 @@ export default function App() {
           }
         }
       }
-      // TODO: сделать валидацию get запроса, узнать как это делать
+      // валидация get через query
       const response = await fetch(`https://tetrasyllabical-unestablishable-betsey.ngrok-free.dev/api/shop-data?initData=${encodeURIComponent(window.Telegram.WebApp.initData)}`, {
         method: 'GET',
         headers: {
@@ -196,7 +196,7 @@ export default function App() {
         <div className="orders">
           {orders.length === 0 && (<div className="empty">Нет заказов</div>)}
           {isLoading ? <div className="empty">Загрузка заказов...</div> :
-            orders.map((order) => (
+            orders.orders.map((order) => (
               <OrderCard
                 name={order.name}
                 price={order.price}
