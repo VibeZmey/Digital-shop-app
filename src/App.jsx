@@ -94,10 +94,12 @@ export default function App() {
       const cached = localStorage.getItem(CACHE_KEY);
       if (cached) {
         console.log('Загружаем устаревший кеш как fallback');
-        setData(JSON.parse(cached));
+        setData(JSON.parse(cached).categories);
+        setOrders(JSON.parse(cached).orders);
         tg?.showAlert('Показаны сохранённые данные. Проверьте подключение.');
       } else {
         setData({ categories: [] });
+        setOrders({ orders: [] });
         tg?.showAlert(`Ошибка: ${error.message}`);
       }
     } finally {
