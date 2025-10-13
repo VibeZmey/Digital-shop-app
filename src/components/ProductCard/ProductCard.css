@@ -10,6 +10,7 @@
 .product-card__left { display: flex; align-items: center; gap: 12px; }
 
 /* ВАЖНО: изображение PNG любого размера вписывается в квадрат 64x64 без искажений */
+
 .product-card__image {
   width: 64px;
   height: 64px;

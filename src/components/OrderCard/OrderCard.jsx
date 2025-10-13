@@ -11,7 +11,7 @@ export default function OrderCard ({ name, price, image, onClick, status }) {
           {price!==0 ? <div className="order-card__price">{price} ₽</div> : null}
         </div>
       </div>
-      <div className="order-card__cta">{status}</div>
+      <div className="order-card__cta">{status === "inProcess" && "в процессе" || status}</div>
     </div>
   );
 }
