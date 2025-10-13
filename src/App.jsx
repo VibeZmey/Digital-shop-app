@@ -61,10 +61,12 @@ export default function App() {
             if(ageOrders < CACHE_DURATION){
               console.log('Заказы загружены из кеша');
               setData({ ...data, orders: JSON.parse(cachedOrders)});
+              console.log(cachedOrders);
             }
             if(ageProducts < CACHE_DURATION){
               console.log('Продукты загружены из кеша');
               setData({ ...data, categories: JSON.parse(cachedProducts)});
+              console.log(cachedProducts);
             }
             setIsLoading(false);
             return;
