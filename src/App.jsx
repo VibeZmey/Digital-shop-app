@@ -51,23 +51,22 @@ export default function App() {
         const cachedProducts = localStorage.getItem(CACHE_KEY_PRODUCTS);
         const cachedOrders = localStorage.getItem(CACHE_KEY_ORDERS);
         const cacheProductsTime = localStorage.getItem(`${CACHE_KEY_PRODUCTS}_time`);
-        const cacheOrdersTime = localStorage.getItem(`${CACHE_KEY_PRODUCTS}_time`);
+        const cacheOrdersTime = localStorage.getItem(`${CACHE_KEY_ORDERS}_time`);
 
         if (cachedProducts && cacheProductsTime && cachedOrders && cacheOrdersTime) {
           const ageProducts = Date.now() - parseInt(cacheProductsTime);
           const ageOrders = Date.now() - parseInt(cacheOrdersTime);
 
-          if (ageProducts < CACHE_DURATION || ageOrders < CACHE_DURATION) {
+          if ((ageProducts < CACHE_DURATION) || (ageOrders < CACHE_DURATION)) {
             if(ageOrders < CACHE_DURATION){
               console.log('Заказы загружены из кеша');
               setData({ ...data, orders: JSON.parse(cachedOrders)});
-              setIsLoading(false);
             }
             if(ageProducts < CACHE_DURATION){
               console.log('Продукты загружены из кеша');
               setData({ ...data, categories: JSON.parse(cachedProducts)});
-              setIsLoading(false);
             }
+            setIsLoading(false);
             return;
           }
         }
