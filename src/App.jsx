@@ -20,7 +20,7 @@ export default function App() {
     if (tg?.ready) {
       tg.ready();
       // Начинаем загрузку данных сразу после ready
-      loadData();
+      loadAllData();
     }
   }, [tg]);
 
@@ -43,7 +43,47 @@ export default function App() {
   const [data, setData] = useState({ categories: [], orders: [] });
   const [isLoading, setIsLoading] = useState(false);
 
-  const loadData = async (forceRefresh = false) => {
+  const loadOrders = async () => {
+    try {
+      const response = await fetch(`https://tetrasyllabical-unestablishable-betsey.ngrok-free.dev/api/order?initData=${encodeURIComponent(window.Telegram.WebApp.initData)}`, {
+        method: 'GET',
+        headers: {
+          'Accept': 'application/json',
+          'Content-Type': 'application/json',
+          'ngrok-skip-browser-warning': 'true'
+        },
+      });
+
+      if (!response.ok) {
+        console.log("Ошибка");
+      }
+
+      const result = await response.json();
+      if (result.success && result.data) {
+        setData((prev) => ({ ...prev, orders: result.data.orders}));
+        localStorage.setItem(CACHE_KEY_ORDERS, JSON.stringify(result.data.orders));
+        localStorage.setItem(`${CACHE_KEY_ORDERS}_time`, Date.now().toString());
+        console.log('Заказы сохранены в кеш');
+      }
+    }catch (error) {
+      console.error('Ошибка загрузки заказов:', error);
+
+      const cachedOrders = localStorage.getItem(CACHE_KEY_ORDERS);
+
+      if (cachedOrders) {
+        console.log('Загружаем устаревший кеш заказов как fallback');
+        setData((prev) => ({ ...prev, orders: JSON.parse(cachedOrders)}));
+        tg?.showAlert('Показаны сохранённые данные. Проверьте подключение.');
+      } else {
+        setData((prev) => ({ ...prev, orders: []}));
+        tg?.showAlert(`Ошибка: ${error.message}`);
+      }
+    }
+
+
+  }
+
+  const loadAllData = async (forceRefresh = false) => {
     setIsLoading(true);
 
     try {
@@ -237,6 +277,7 @@ export default function App() {
         service={selection.category}
         product={selection.product}
         requiresPassword={selection.product?.requiresPassword}
+        loadOrders={loadOrders}
       />
     </div>
   );

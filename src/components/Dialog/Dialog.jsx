@@ -2,7 +2,7 @@ import React, { useEffect, useRef, useState } from "react";
 import "./Dialog.css";
 import {useTelegram} from "../../telegram/useTelegram";
 
-export default function Dialog({ isOpen, onClose, service, product, requiresPassword }) {
+export default function Dialog({ isOpen, onClose, service, product, requiresPassword, loadOrders }) {
   const { MainButton, tg } = useTelegram();
 
   const ref = useRef(null);
@@ -35,6 +35,7 @@ export default function Dialog({ isOpen, onClose, service, product, requiresPass
           buttons: [{type: "close", text: "ОК"}],
         });
       }
+      await loadOrders();
       onClose();
     };
 
