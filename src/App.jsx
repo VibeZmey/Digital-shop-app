@@ -62,14 +62,13 @@ export default function App() {
               console.log('Заказы загружены из кеша');
               setData({ ...data, orders: JSON.parse(cachedOrders)});
               setIsLoading(false);
-              return;
             }
             if(ageProducts < CACHE_DURATION){
               console.log('Продукты загружены из кеша');
               setData({ ...data, categories: JSON.parse(cachedProducts)});
               setIsLoading(false);
-              return;
             }
+            return;
           }
         }
       }
