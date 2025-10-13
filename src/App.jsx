@@ -9,7 +9,8 @@ import OrderCard from "./components/OrderCard/OrderCard.jsx";
 import { useTelegram } from "./telegram/useTelegram";
 import "./styles/app.css";
 
-const CACHE_KEY = 'shop_data';
+const CACHE_KEY_PRODUCTS = 'shop_data';
+const CACHE_KEY_ORDERS = 'orders';
 const CACHE_DURATION = 5 * 60 * 1000; // 5 минут
 
 export default function App() {
@@ -47,14 +48,24 @@ export default function App() {
 
     try {
       if (!forceRefresh) {
-        const cached = localStorage.getItem(CACHE_KEY);
-        const cacheTime = localStorage.getItem(`${CACHE_KEY}_time`);
+        const cachedProducts = localStorage.getItem(CACHE_KEY_PRODUCTS);
+        const cachedOrders = localStorage.getItem(CACHE_KEY_ORDERS);
+        const cacheProductsTime = localStorage.getItem(`${CACHE_KEY_PRODUCTS}_time`);
+        const cacheOrdersTime = localStorage.getItem(`${CACHE_KEY_PRODUCTS}_time`);
 
-        if (cached && cacheTime) {
-          const age = Date.now() - parseInt(cacheTime);
-          if (age < CACHE_DURATION) {
+        if (cachedProducts && cacheProductsTime && cachedOrders && cacheOrdersTime) {
+          const ageProducts = Date.now() - parseInt(cacheProductsTime);
+          const ageOrders = Date.now() - parseInt(cacheOrdersTime);
+
+          if (ageProducts < CACHE_DURATION) {
             console.log('Загружено из кеша');
-            setData(JSON.parse(cached));
+            setData({ ...data, categories: JSON.parse(cachedProducts)});
+            setIsLoading(false);
+            return;
+          }
+          if (ageOrders < CACHE_DURATION) {
+            console.log('Загружено из кеша');
+            setData({ ...data, orders: JSON.parse(cachedOrders)});
             setIsLoading(false);
             return;
           }
@@ -79,8 +90,10 @@ export default function App() {
       if (result.success && result.data) {
         setData(result.data);
         // Сохраняем в кеш
-        localStorage.setItem(CACHE_KEY, JSON.stringify(result.data));
-        localStorage.setItem(`${CACHE_KEY}_time`, Date.now().toString());
+        localStorage.setItem(CACHE_KEY_PRODUCTS, JSON.stringify(result.data.categories));
+        localStorage.setItem(CACHE_KEY_ORDERS, JSON.stringify(result.data.orders));
+        localStorage.setItem(`${CACHE_KEY_PRODUCTS}_time`, Date.now().toString());
+        localStorage.setItem(`${CACHE_KEY_ORDERS}_time`, Date.now().toString());
 
         console.log('Данные сохранены в кеш');
       }
@@ -89,10 +102,12 @@ export default function App() {
       console.error('Ошибка загрузки:', error);
 
       // Пытаемся загрузить из кеша даже если он устарел
-      const cached = localStorage.getItem(CACHE_KEY);
-      if (cached) {
+      const cachedProducts = localStorage.getItem(CACHE_KEY_PRODUCTS);
+      const cachedOrders = localStorage.getItem(CACHE_KEY_ORDERS);
+
+      if (cachedProducts && cachedOrders) {
         console.log('Загружаем устаревший кеш как fallback');
-        setData(JSON.parse(cached));
+        setData({categories: JSON.parse(cachedProducts), orders: JSON.parse(cachedOrders)});
         tg?.showAlert('Показаны сохранённые данные. Проверьте подключение.');
       } else {
         setData({ categories: [], orders: [] });
