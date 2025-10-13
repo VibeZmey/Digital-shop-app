@@ -1,4 +1,4 @@
-import React, {useCallback, useEffect, useState} from "react";
+import React, {useCallback, useState} from "react";
 import Header from "./components/Header/Header.jsx";
 import Tabs from "./components/Tabs/Tabs.jsx";
 import CategoryAccordion from "./components/CategoryAccordion/CategoryAccordion.jsx";
@@ -119,9 +119,6 @@ export default function App() {
       setIsLoading(false);
     }
   }
-  useEffect(() => {
-    loadData();
-  }, [])
 
 
   const [tab, setTab] = useState("shop");
