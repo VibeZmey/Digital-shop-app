@@ -57,17 +57,19 @@ export default function App() {
           const ageProducts = Date.now() - parseInt(cacheProductsTime);
           const ageOrders = Date.now() - parseInt(cacheOrdersTime);
 
-          if (ageProducts < CACHE_DURATION) {
-            console.log('Загружено из кеша');
-            setData({ ...data, categories: JSON.parse(cachedProducts)});
-            setIsLoading(false);
-            return;
-          }
-          if (ageOrders < CACHE_DURATION) {
-            console.log('Загружено из кеша');
-            setData({ ...data, orders: JSON.parse(cachedOrders)});
-            setIsLoading(false);
-            return;
+          if (ageProducts < CACHE_DURATION || ageOrders < CACHE_DURATION) {
+            if(ageOrders < CACHE_DURATION){
+              console.log('Заказы загружены из кеша');
+              setData({ ...data, orders: JSON.parse(cachedOrders)});
+              setIsLoading(false);
+              return;
+            }
+            if(ageProducts < CACHE_DURATION){
+              console.log('Продукты загружены из кеша');
+              setData({ ...data, categories: JSON.parse(cachedProducts)});
+              setIsLoading(false);
+              return;
+            }
           }
         }
       }
