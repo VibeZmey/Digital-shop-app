@@ -1,4 +1,4 @@
-import React, {useCallback, useState} from "react";
+import React, {useCallback, useEffect, useState} from "react";
 import Header from "./components/Header/Header.jsx";
 import Tabs from "./components/Tabs/Tabs.jsx";
 import CategoryAccordion from "./components/CategoryAccordion/CategoryAccordion.jsx";
@@ -16,7 +16,7 @@ const CACHE_DURATION = 5 * 60 * 1000; // 5 минут
 export default function App() {
   const {tg} = useTelegram();
 
-  React.useEffect(() => {
+  useEffect(() => {
     if (tg?.ready) {
       tg.ready();
       // Начинаем загрузку данных сразу после ready
@@ -251,10 +251,7 @@ export default function App() {
           {isLoading ? <div className="empty">Загрузка заказов...</div> :
             orders.map((order) => (
               <OrderCard
-                name={order.name}
-                price={order.price}
-                image={order.image_path}
-                status={order.status}
+                order={order}
                 onClick={()=>{}}
               />
             ))}
