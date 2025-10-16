@@ -1,0 +1,51 @@
+dialog:not([open]) { display: none !important; }
+
+.dialog::backdrop {
+  background: rgba(0, 0, 0, 0.5);
+}
+
+/* Центрированное окно, не fullscreen */
+.dialog[open] {
+  position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%);
+  border: none; background: #fff; color: #111;
+  border-radius: 16px;
+  width: min(420px, calc(100vw - 20px));
+  padding: 0;
+  box-shadow: 0 14px 40px rgba(0,0,0,.16);
+}
+
+.dialog__close {
+  position: absolute; top: 16px; right: 16px;
+  line-height: 1; border: none; background: transparent; font-size: 28px; cursor: pointer; color: #666;
+  padding: 8px; border-radius: 12px;
+}
+.dialog__close:hover { color: #000; }
+
+.dialog__body {
+  padding: 24px 20px 20px 20px;
+  display: flex; flex-direction: column; gap: 14px; box-sizing: border-box;
+}
+
+.dialog__title { margin: 0 36px 0 0; font-size: 20px; font-weight: 800; }
+.dialog__meta { color: #666; font-size: 14px; }
+.dialog__service { font-weight: 700; }
+.dialog__product { opacity: .95; }
+.dialog__dash { opacity: .6; }
+
+.dialog__form { margin-top: 6px; display: flex; flex-direction: column; gap: 12px; }
+.dialog__field { display: flex; flex-direction: column; gap: 6px; }
+.dialog__label { font-size: 13px; color: #444; }
+.dialog__field input {
+  height: 44px; padding: 0 12px; border: 1px solid rgba(0,0,0,.12); border-radius: 10px; outline: none; font-size: 14px; background: #fff;
+}
+.dialog__field input:focus {
+  border-color: var(--app-link);
+  box-shadow: 0 0 0 3px color-mix(in srgb, var(--app-link) 20%, transparent);
+}
+
+.dialog__pay {
+  margin-top: 8px; height: 48px; border: none; border-radius: 12px;
+  background: var(--app-button); color: var(--app-button-text);
+  font-weight: 800; font-size: 15px; cursor: pointer;
+}
+.dialog__pay:hover { filter: brightness(.97); }

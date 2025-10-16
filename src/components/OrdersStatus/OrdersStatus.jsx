@@ -1,5 +1,5 @@
 //import React, { useEffect, useRef, useState } from "react";
-import "/Dialog/Dialog.css";
+import "./OrdersStatus.css";
 import {useEffect, useRef} from "react";
 //import {useTelegram} from "../../telegram/useTelegram";
 
