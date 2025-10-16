@@ -6,6 +6,7 @@ import ProductCard from "./components/ProductCard/ProductCard.jsx";
 import Dialog from "./components/Dialog/Dialog.jsx";
 import AdminPanel from "./components/AdminPanel/AdminPanel.jsx";
 import OrderCard from "./components/OrderCard/OrderCard.jsx";
+import OrdersStatus from "./components/OrdersStatus/OrdersStatus.jsx";
 import { useTelegram } from "./telegram/useTelegram";
 import "./styles/app.css";
 
@@ -162,14 +163,24 @@ export default function App() {
 
 
   const [tab, setTab] = useState("shop");
-  const [checkoutOpen, setCheckoutOpen] = useState(false);
-  const [selection, setSelection] = useState({ category: null, product: null });
+  const [checkoutOpenBuy, setCheckoutOpenBuy] = useState(false);
+  const [checkoutOpenOrder, setCheckoutOpenOrder] = useState(false);
 
-  const openCheckout = useCallback((category, product) => {
-    setSelection({ category, product });
-    setCheckoutOpen(true);
+  const openCheckoutBuy = useCallback((category, product) => {
+    setSelectionBuy({ category, product });
+    setCheckoutOpenBuy(true);
   }, []);
-  const closeCheckout = useCallback(() => setCheckoutOpen(false), []);
+  const closeCheckoutBuy = useCallback(() => setCheckoutOpenBuy(false), []);
+
+
+  const [selectionBuy, setSelectionBuy] = useState({ category: null, product: null });
+  const [selectionOrder, setSelectionOrder] = useState(null);
+
+  const openCheckoutOrder = useCallback((order) => {
+    setSelectionOrder(order);
+    setCheckoutOpenOrder(true);
+  }, []);
+  const closeCheckoutOrder = useCallback(() => setCheckoutOpenOrder(false), []);
 
   // Admin ops
   const addCategory = async (cat) => {
@@ -237,7 +248,7 @@ export default function App() {
                     name={p.name}
                     price={p.price}
                     image={p.image}
-                    onClick={() => openCheckout(cat, p)}
+                    onClick={() => openCheckoutBuy(cat, p)}
                   />
                 ))}
               </div>
@@ -252,7 +263,7 @@ export default function App() {
             orders.map((order) => (
               <OrderCard
                 order={order}
-                onClick={()=>{}}
+                onClick={()=> openCheckoutOrder(order)}
               />
             ))}
         </div>
@@ -268,12 +279,18 @@ export default function App() {
         />
       )}
 
+      <OrdersStatus
+        isOpen={checkoutOpenOrder}
+        onClose={closeCheckoutOrder}
+        order={selectionOrder}
+      />
+
       <Dialog
-        isOpen={checkoutOpen}
-        onClose={closeCheckout}
-        service={selection.category}
-        product={selection.product}
-        requiresPassword={selection.product?.requiresPassword}
+        isOpen={checkoutOpenBuy}
+        onClose={closeCheckoutBuy}
+        service={selectionBuy.category}
+        product={selectionBuy.product}
+        requiresPassword={selectionBuy.product?.requiresPassword}
         loadOrders={loadOrders}
       />
     </div>
