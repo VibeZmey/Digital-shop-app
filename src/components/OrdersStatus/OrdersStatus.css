@@ -1,3 +1,4 @@
+/* Базовые стили диалога (совпадают со стилем, который вы использовали ранее) */
 dialog:not([open]) { display: none !important; }
 
 .dialog::backdrop {
@@ -49,3 +50,92 @@ dialog:not([open]) { display: none !important; }
   font-weight: 800; font-size: 15px; cursor: pointer;
 }
 .dialog__pay:hover { filter: brightness(.97); }
+
+/* ---------- Дополнительные стили для окна статуса заказа ---------- */
+.dialog__content { display: flex; flex-direction: column; gap: 12px; }
+
+.dialog__media {
+  display: flex;
+  gap: 12px;
+  align-items: center;
+}
+
+.dialog__image {
+  width: 56px;
+  height: 56px;
+  border-radius: 10px;
+  object-fit: cover;
+  background: #f5f5f5;
+  flex-shrink: 0;
+  border: 1px solid rgba(0,0,0,.06);
+}
+.dialog__image--placeholder {
+  display: inline-block;
+}
+
+/* Блок деталей справа от изображения */
+.dialog__details {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  min-width: 0;
+}
+
+/* Бейдж со статусом */
+.dialog__status {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 8px 10px;
+  border-radius: 12px;
+  font-weight: 700;
+  font-size: 13px;
+  width: fit-content;
+  box-sizing: border-box;
+}
+
+/* маленький цветной кружок слева */
+.dialog__status-dot {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  box-shadow: 0 0 0 4px transparent;
+  flex-shrink: 0;
+}
+
+/* Статусы — оттенки и цвета текста (подберите цвета под вашу тему) */
+.status--inProcess {
+  background: #FFF8E6;
+  color: #B36B00;
+}
+.status--inProcess .dialog__status-dot { background: #D69E2E; }
+
+.status--completed {
+  background: #E6FFF2;
+  color: #0A8A4D;
+}
+.status--completed .dialog__status-dot { background: #06A36C; }
+
+.status--failed {
+  background: #FFF0F0;
+  color: #A32626;
+}
+.status--failed .dialog__status-dot { background: #D64545; }
+
+.status--pending {
+  background: #F4F6F9;
+  color: #435466;
+}
+.status--pending .dialog__status-dot { background: #98A3B8; }
+
+/* Время открытия / закрытия */
+.dialog__times { display: flex; flex-direction: column; gap: 4px; color: #555; font-size: 13px; }
+.dialog__time-row { display: flex; gap: 8px; align-items: baseline; }
+.dialog__time-label { color: #666; font-size: 13px; min-width: 56px; }
+.dialog__time { color: #333; font-weight: 600; font-size: 13px; }
+
+/* Адаптивность — меньше отступов на узких экранах */
+@media (max-width: 420px) {
+  .dialog__body { padding: 18px 14px; }
+  .dialog__image { width: 48px; height: 48px; }
+}
